@@ -1,0 +1,47 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Знакомство</h1>
+    <p>Первый проект на ASP.NET Core.</p>
+</div>
+
+<hr />
+
+<h2>О себе</h2>
+<p>Студент, изучаю ASP.NET Core.</p>
+
+<ul>
+    <li>ФИО: Иванов Иван</li>
+    <li>Группа: ИС-21</li>
+    <li>Предмет: net.ajax</li>
+</ul>
+
+<h3>Что уже умею</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Технология</th>
+            <th>Уровень</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HTML</td>
+            <td>Базовый</td>
+        </tr>
+        <tr>
+            <td>C#</td>
+            <td>Базовый</td>
+        </tr>
+        <tr>
+            <td>ASP.NET Core</td>
+            <td>Начинаю</td>
+        </tr>
+    </tbody>
+</table>
+
+<button class="btn btn-primary" onclick="alert('Привет!')">Поздороваться</button>
