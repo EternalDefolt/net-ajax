@@ -1,0 +1,39 @@
+@using TaskScheduler.Models
+@model ScheduledTask
+@{
+    ViewData["Title"] = "Новая задача";
+}
+
+<h1>Новая задача</h1>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Название</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="ScheduledAt" class="form-label">Дата и время</label>
+        <input asp-for="ScheduledAt" type="datetime-local" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label">Статус</label>
+        <input asp-for="Status" class="form-control" placeholder="planned / done" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Описание</label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DurationMinutes" class="form-label">Длительность, минут</label>
+        <input asp-for="DurationMinutes" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a asp-action="Index" class="btn btn-secondary">К списку</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

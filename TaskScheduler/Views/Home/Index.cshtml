@@ -9,6 +9,7 @@
 <p>API с расписанием версий. v1 отдаёт базовые поля, v2 добавляет ещё два.</p>
 
 <h2>Задачи</h2>
+<p><a class="btn btn-primary" asp-action="Create">Добавить задачу</a></p>
 <table class="table">
     <thead>
         <tr>
@@ -16,6 +17,7 @@
             <th>Задача</th>
             <th>Когда</th>
             <th>Статус</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -26,6 +28,7 @@
                 <td>@t.Title</td>
                 <td>@t.ScheduledAt.ToString("dd.MM.yyyy HH:mm")</td>
                 <td>@t.Status</td>
+                <td><a asp-action="Details" asp-route-id="@t.Id">Подробнее</a></td>
             </tr>
         }
     </tbody>

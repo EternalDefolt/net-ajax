@@ -1,0 +1,19 @@
+@using TaskScheduler.Models
+@model ScheduledTask
+@{
+    ViewData["Title"] = "Задача";
+}
+
+<h1>Задача №@Model.Id</h1>
+
+<table class="table">
+    <tbody>
+        <tr><th>Название</th><td>@Model.Title</td></tr>
+        <tr><th>Дата и время</th><td>@Model.ScheduledAt.ToString("dd.MM.yyyy HH:mm")</td></tr>
+        <tr><th>Статус</th><td>@Model.Status</td></tr>
+        <tr><th>Описание</th><td>@Model.Description</td></tr>
+        <tr><th>Длительность, минут</th><td>@Model.DurationMinutes</td></tr>
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">К списку</a>

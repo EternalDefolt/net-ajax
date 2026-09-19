@@ -7,4 +7,5 @@ public interface ITaskRepository
     Task<IReadOnlyList<ScheduledTask>> GetAllAsync(CancellationToken ct = default);
     Task<ScheduledTask?> GetByIdAsync(int id, CancellationToken ct = default);
     Task<IReadOnlyList<ScheduledTask>> GetByStatusAsync(string status, CancellationToken ct = default);
+    Task<ScheduledTask> AddAsync(ScheduledTask task, CancellationToken ct = default);
 }

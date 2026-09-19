@@ -22,6 +22,29 @@ public class HomeController : Controller
         return View(tasks);
     }
 
+    public async Task<IActionResult> Details(int id, CancellationToken ct)
+    {
+        var task = await _repo.GetByIdAsync(id, ct);
+        if (task is null)
+            return NotFound();
+
+        return View(task);
+    }
+
+    [HttpGet]
+    public IActionResult Create() => View();
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(ScheduledTask task, CancellationToken ct)
+    {
+        if (!ModelState.IsValid)
+            return View(task);
+
+        var created = await _repo.AddAsync(task, ct);
+        return RedirectToAction(nameof(Details), new { id = created.Id });
+    }
+
     public IActionResult Privacy()
     {
         return View();

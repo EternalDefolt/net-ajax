@@ -6,7 +6,7 @@ namespace TaskScheduler.Services;
 public class JsonTaskRepository : ITaskRepository
 {
     private readonly string _filePath;
-    private readonly JsonSerializerOptions _opts = new() { PropertyNameCaseInsensitive = true };
+    private readonly JsonSerializerOptions _opts = new() { PropertyNameCaseInsensitive = true, WriteIndented = true };
 
     public JsonTaskRepository(IWebHostEnvironment env)
     {
@@ -31,4 +31,14 @@ public class JsonTaskRepository : ITaskRepository
         => (await LoadAsync(ct))
             .Where(t => string.Equals(t.Status, status, StringComparison.OrdinalIgnoreCase))
             .ToList();
+
+    public async Task<ScheduledTask> AddAsync(ScheduledTask task, CancellationToken ct = default)
+    {
+        var items = await LoadAsync(ct);
+        task.Id = items.Count == 0 ? 1 : items.Max(t => t.Id) + 1;
+        items.Add(task);
+        await using var stream = File.Create(_filePath);
+        await JsonSerializer.SerializeAsync(stream, items, _opts, ct);
+        return task;
+    }
 }
