@@ -37,8 +37,32 @@ public class JsonTaskRepository : ITaskRepository
         var items = await LoadAsync(ct);
         task.Id = items.Count == 0 ? 1 : items.Max(t => t.Id) + 1;
         items.Add(task);
+        await SaveAsync(items, ct);
+        return task;
+    }
+
+    public async Task<bool> UpdateAsync(ScheduledTask task, CancellationToken ct = default)
+    {
+        var items = await LoadAsync(ct);
+        var index = items.FindIndex(t => t.Id == task.Id);
+        if (index < 0) return false;
+        items[index] = task;
+        await SaveAsync(items, ct);
+        return true;
+    }
+
+    public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
+    {
+        var items = await LoadAsync(ct);
+        var removed = items.RemoveAll(t => t.Id == id);
+        if (removed == 0) return false;
+        await SaveAsync(items, ct);
+        return true;
+    }
+
+    private async Task SaveAsync(List<ScheduledTask> items, CancellationToken ct)
+    {
         await using var stream = File.Create(_filePath);
         await JsonSerializer.SerializeAsync(stream, items, _opts, ct);
-        return task;
     }
 }

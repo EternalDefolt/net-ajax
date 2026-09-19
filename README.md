@@ -33,6 +33,29 @@ v1 не меняется. v2 добавляет два поля. Старые з
 
 Новая задача дописывается в `Data/tasks.json`.
 
+## REST-возможности v2 (`api/v2/tasks`)
+
+Полный набор методов и правил из конспекта. Контроллер `[ApiController]`, ошибки в формате ProblemDetails (RFC 7807).
+
+| Метод | Маршрут | Поведение |
+| --- | --- | --- |
+| GET | `/api/v2/tasks` | список, фильтр `?status=` |
+| GET | `/api/v2/tasks/{id}` | одна задача, заголовок `ETag`; с `If-None-Match` возвращает `304 Not Modified` |
+| GET | `/api/v2/tasks/by-ids?ids=1,3` | кастомный `IModelBinder` разбирает список чисел через запятую |
+| POST | `/api/v2/tasks` | `201 Created` + `Location` + `ETag`; заголовок `Idempotency-Key` защищает от дублей (хранится 24 часа) |
+| PUT | `/api/v2/tasks/{id}` | полная замена, нужен `If-Match`: нет заголовка `428`, устаревший `412`, верный `200` |
+| PATCH | `/api/v2/tasks/{id}` | частичное изменение, `If-Match` проверяется если передан |
+| DELETE | `/api/v2/tasks/{id}` | `204 No Content`, повторно `404` |
+
+Дополнительно:
+
+- Request DTO с валидацией (`CreateTaskRequest`, `UpdateTaskRequest`, `PatchTaskRequest`), свой атрибут `[AllowedStatus]`, невалидный запрос даёт `400` с ProblemDetails и списком ошибок
+- Response DTO `TaskDtoV2` и мапперы `TaskMappings`
+- Идемпотентность: `Services/IIdempotencyStore.cs`
+- ETag: `Infrastructure/ETagHelper.cs`
+- Кастомный биндер: `Infrastructure/CsvIntArrayBinder.cs`
+- Глобальный обработчик ошибок: `Infrastructure/GlobalExceptionHandler.cs` (`AddExceptionHandler` + `AddProblemDetails`)
+
 ## Скрины
 
 - `TaskScheduler/screenshots/01-home.jpg` - список задач и ссылки на API
