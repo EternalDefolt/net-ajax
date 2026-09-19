@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Созвон с командой",
+    "scheduledAt": "2026-09-20T10:00:00",
+    "status": "planned",
+    "description": "Обсудить план спринта",
+    "durationMinutes": 30
+  },
+  {
+    "id": 2,
+    "title": "Ревью кода",
+    "scheduledAt": "2026-09-20T14:00:00",
+    "status": "planned",
+    "description": "PR по API планировщика",
+    "durationMinutes": 45
+  },
+  {
+    "id": 3,
+    "title": "Написать отчёт",
+    "scheduledAt": "2026-09-19T18:00:00",
+    "status": "done"
+  },
+  {
+    "id": 4,
+    "title": "Бэкап базы",
+    "scheduledAt": "2026-09-21T02:00:00",
+    "status": "planned",
+    "description": "Ночной бэкап",
+    "durationMinutes": 15
+  }
+]

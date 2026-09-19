@@ -1,0 +1,39 @@
+@using TaskScheduler.Models
+@model IReadOnlyList<ScheduledTask>
+@{
+    ViewData["Title"] = "Планировщик задач";
+}
+
+<h1>Планировщик задач</h1>
+
+<p>API с расписанием версий. v1 отдаёт базовые поля, v2 добавляет ещё два.</p>
+
+<h2>Задачи</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Задача</th>
+            <th>Когда</th>
+            <th>Статус</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model)
+        {
+            <tr>
+                <td>@t.Id</td>
+                <td>@t.Title</td>
+                <td>@t.ScheduledAt.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@t.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>API</h2>
+<ul>
+    <li>v1: <a href="/api/tasks">/api/tasks</a>, <a href="/api/tasks/1">/api/tasks/1</a></li>
+    <li>v2: <a href="/api/v2/tasks">/api/v2/tasks</a>, <a href="/api/v2/tasks/1">/api/v2/tasks/1</a></li>
+    <li>Фильтр: <a href="/api/tasks?status=planned">/api/tasks?status=planned</a></li>
+</ul>
